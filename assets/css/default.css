@@ -108,6 +108,8 @@ ul, ol, dl { list-style-position: outside;
 	       max-height: 30em;
 	       padding: 0.5em 1em; }
 
+#content aside + div.highlight { margin-top: -1em; }
+
 #content code { font-size: 0.9em; }
 
 #content p > code, #content li > code { border: 1px solid #bbb;

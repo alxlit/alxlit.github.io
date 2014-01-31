@@ -187,7 +187,8 @@ On the third line I check whether `part_1` is the "main" thing being run, i.e. t
 ### Using LaTeX
 
 Here's the basic preamble for working with PGF/TikZ.
-<aside style="margin-bottom: -1em">
+
+<aside>
 <p>Don't worry about the <code>pgfplotsset</code> syntax. I don't understand it, either.</p>
 </aside>
 
