@@ -130,18 +130,8 @@ Here's a laundry list of suggestions for writing MATLAB code.
 * **Keep scripts/functions small.** Say, less than 250 lines. Long scripts and functions are hard to debug and work on.
 * **Don't use workspace (i.e. global) variables to pass along information.**
   Relying on global variables makes dependency tracking (what variables must I provide in order to use this script/function?) very difficult.
-* **Don't blindly `load` data**
-
-
-Functions are the basic self-contained "unit" you should be working with.
-Keep them small (say, less than 250 lines).
-Don't use workspace (i.e. global) variables to pass along information, don't blindly `load` data, and try to section off any I/O.
-
-Why?
-Long scripts/functions are hard to debug and work with.
-Relying on global variables makes dependency tracking (what variables must I provide in order to use script/function?) difficult.
-Calling `load datafile` instead of `load datafile x y z` is less readable and risks polluting your namespace.
-And I/O operations (e.g. plotting) are costly, fragile, and often unneeded.
+* **Don't blindly `load` data.** The explicit form `load datafile x y z` is more readble, can catch errors, and doesn't risk polluting your scope.
+* **Try to section off I/O operations.** In general I/O (e.g. plotting) is costly, fragile, and often unneeded.
 
 So what's a better way?
 Try the following:
