@@ -3,6 +3,8 @@ title: Process homework scans using the GIMP
 layout: post
 ---
 
+## Motivation
+
 I attend [Virginia Tech][1], where it is *strongly recommended* that engineering students purchase a tablet PC (e.g. [Fujitsu's Lifebook][2]) from the bookstore, around $2000 with a four year warranty.
 The idea I suppose is to save trees, enable note-taking directly on lecture slides, interactive classrooms via [DyKnow][3], yadda yadda.
 
@@ -10,6 +12,8 @@ The cheaper, more sensible option is to buy a mid-range laptop, a printer/scanne
 My laptop was $800 from Best Buy and came with an HP Photosmart.
 Haven't had a single problem with it.
 It was a little awkward for the first semester, being the only one without a tablet, but after that nobody cares.
+
+## How to do it
 
 I think only three or four of my classes required handwritten assignments to be turned in online.
 For these classes I did my assignments in pencil, scanned them with [Simple Scan][4] (takes 5 minutes via USB, a lot longer over wireless), use the [GIMP][5] to clean up the lines and crop to a reasonable size, and ImageMagick's [`convert`][6] utility to put the images into an optimized PDF.

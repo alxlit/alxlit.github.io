@@ -19,6 +19,10 @@ It isn't used much outside of academia, which is a shame because it really is su
 * Source files are text
 * Lots of powerful libraries
 
+When writing a technical paper with lots of figures and equations, Word gets bogged down really quickly.
+Editing more than ten pages or so of such content can be painfully slow.
+With LaTeX, you can (not that you would) have hundreds or even thousands of pages open in your editor, because *it's just text*.
+
 The usual argument against LaTeX asserts that it is difficult to install and use.
 Perhaps this was true in the past, but these days all you have to do is grab the latest [TeX Live][3] distribution.
 There's a learning curve, to be sure, but have no fear: The [Wikibook][4] will hold your hand.
@@ -38,8 +42,7 @@ Luckily, there's an excellent library called [matlab2tikz][8] that does the job.
 
 Here's the typical structure of a project:
 
-```
-diary
+<pre><code>diary
 └── part_1
 m
 ├── helpers
@@ -61,7 +64,7 @@ tex
 ├── plots
 │   └── part_1_mag_db.tex
 └── project.tex
-```
+</code></pre>
 
 The `m/` directory (and its subdirectories) are added to MATLAB's path.
 
@@ -121,9 +124,15 @@ The `resample_for_tikz` function is explained a little bit later.
 
 ### Working in parts
 
-Don't put all your work into a single script.
-In fact, try not to write scripts at all.
-This is true for software in general, but *especially* true for MATLAB since everything gets dumped into the persistent workspace.
+Here's a laundry list of suggestions for writing MATLAB code.
+
+* **Don't put all your work into a single script.** Break it up, and try to write functions instead of scripts.
+* **Keep scripts/functions small.** Say, less than 250 lines. Long scripts and functions are hard to debug and work on.
+* **Don't use workspace (i.e. global) variables to pass along information.**
+  Relying on global variables makes dependency tracking (what variables must I provide in order to use this script/function?) very difficult.
+* **Don't blindly `load` data**
+
+
 Functions are the basic self-contained "unit" you should be working with.
 Keep them small (say, less than 250 lines).
 Don't use workspace (i.e. global) variables to pass along information, don't blindly `load` data, and try to section off any I/O.
@@ -302,23 +311,25 @@ save_tikz('Energy spectral density of $x(t)$');
 
 ### Configuring your editor
 
-In Emacs (with AUCtex), add the following to your `init.el`:
+#### Emacs
 
-{% highlight lisp %}
-(setq TeX-engine 'lualatex)
-{% endhighlight %}
+There are a few options for Emacs (with AUCtex).
+If you don't care about the external stuff, and just want to use `lualatex`, add `(setq TeX-engine 'lualatex)` to your your `init.el`.
+I also like to use `latexmk` (otherwise you have to `C-c C-c` multiple times), but it's not supported out of the box yet.
+Have a look [here][10] or [here][11] on how to set it up yourself.
 
-In Vim, stick the following in your `.vimrc`.
-I got fed up with Vim-LaTeX, so this just sets the local `:make` command:
+#### Vim
+
+I got fed up trying to use Vim-LaTeX, and ended up just using `:make`.
 
 {% highlight vim %}
 au FileType * setlocal mp=latexmk\ -pdf\ -e\ '$pdflatex=\"lualatex\ -file-line-error\ -shell-escape\ -synctex=1\ \\%S\ \\%O\"'\ -f\ '%'
 {% endhighlight %}
 
-## Conclusion
+## Closing thoughts
 
 I think that about covers everything.
-I'm really happy with this workflow, I'm certain that it improved the quality of my work as well as my productivity, and I hope that the information here is useful to others.
+I'm really happy with this workflow, and I'm certain that it improved the quality of my work as well as productivity.
 
 [0]: http://wikipedia.org/wiki/LaTeX
 [1]: http://nitens.org/taraborelli/latex
@@ -329,3 +340,5 @@ I'm really happy with this workflow, I'm certain that it improved the quality of
 [7]: http://wikipedia.org/wiki/PGF/TikZ
 [8]: https://github.com/nschloe/matlab2tikz
 [9]: http://www.mathworks.com/matlabcentral/fileexchange/13500-structure-outline/content/strucdisp.m
+[10]: http://tex.stackexchange.com/questions/124793/emacs-and-latexmk-setup-for-shell-escape
+[11]: https://github.com/tom-tan/auctex-latexmk
