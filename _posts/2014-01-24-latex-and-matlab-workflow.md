@@ -126,8 +126,8 @@ The `resample_for_tikz` function is explained a little bit later.
 
 Here's a laundry list of suggestions for writing MATLAB code.
 
-* **Don't put all your work into a single script.** Break it up, and try to write functions instead of scripts.
-* **Keep scripts/functions small.** Say, less than 250 lines. Long scripts and functions are hard to debug and work on.
+* **Don't do all your work in a single script.** And try to write functions instead of scripts.
+* **Keep scripts/functions small.** Say, less than 200 lines. Long scripts and functions are hard to debug and work on.
 * **Don't use workspace (i.e. global) variables to pass along information.**
   Relying on global variables makes dependency tracking (what variables must I provide in order to use this script/function?) very difficult.
 * **Don't blindly `load` data.** The explicit form `load datafile x y z` is more readble, can catch errors, and doesn't risk polluting your scope.

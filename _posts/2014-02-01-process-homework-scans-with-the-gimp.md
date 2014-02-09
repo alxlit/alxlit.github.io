@@ -11,19 +11,21 @@ The idea I suppose is to save trees, enable note-taking directly on lecture slid
 The cheaper, more sensible option is to buy a mid-range laptop, a printer/scanner combo, and a stack of 50&cent; one-subject notebooks.
 My laptop was $800 from Best Buy and came with an HP Photosmart.
 Haven't had a single problem with it.
-It was a little awkward for the first semester, being the only one without a tablet, but after that nobody cares.
+It was a little awkward for the first semester, being the only one without a tablet, but after that nobody cared.
 
-## How to do it
+The problem is that a few of my classes (maybe two or three) required handwritten assignments to be turned in online.
+For these classes I did my assignments in pencil and scanned them using [Simple Scan][4] (takes only a few minutes).
+But the raw scans were ugly and unwieldy, often several megabytes in size.
 
-I think only three or four of my classes required handwritten assignments to be turned in online.
-For these classes I did my assignments in pencil, scanned them with [Simple Scan][4] (takes 5 minutes via USB, a lot longer over wireless), use the [GIMP][5] to clean up the lines and crop to a reasonable size, and ImageMagick's [`convert`][6] utility to put the images into an optimized PDF.
+## Scripting up a solution
 
+After scanning, I used the GIMP to clean up the lines, and crop to a reasonable size, and used ImageMagick's [`convert`][6] utility to put the images into an optimized PDF.
 The GIMP has a wonderful [Guile][7] API, which you can browse by going to *Help* > *Procedure Browser*, and use by putting `.scm` files into `~/.gimp-2.x/scripts`.
 
-Here's my `homework-scans.scm`:
+Here's my `homework-scan.scm`:
 
 {% highlight scheme %}
-(define (homework-scans filename)
+(define (homework-scan filename)
   (let* ((image (car (gimp-file-load RUN-NONINTERACTIVE filename filename)))
          (drawable (car (gimp-image-get-active-layer image))))
     (gimp-image-crop image 2300 3300 0 0)
@@ -32,7 +34,7 @@ Here's my `homework-scans.scm`:
     (gimp-image-delete image)))
 {% endhighlight %}
 
-Here's the accompanying shell script, `gimp-homework-scans`:
+Here's the accompanying shell script, `prepare-homework-scans`:
 
 {% highlight sh %}
 #!/bin/sh
