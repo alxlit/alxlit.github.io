@@ -5,7 +5,7 @@ layout: post
 
 ## Motivation
 
-[Virginia Tech][1] requires that engineering students purchase a tablet or tablet PC (one of those hybrids, e.g.  [Fujitsu's Lifebook][2]), around $2000 from the bookstore with a four year warranty.
+[Virginia Tech][1] requires its engineering students to purchase a tablet (either a slate or one of those hybrids, e.g. [Fujitsu's Lifebook][2]), around $2000 from the bookstore with a four year warranty.
 The idea I suppose is to save trees, enable note-taking directly on lecture slides, interactive classrooms via [DyKnow][3], yadda yadda.
 
 The cheaper option, more sensible option is to buy a mid-range laptop, a printer/scanner combo, a stack of 50&cent; one-subject notebooks, and a good pen.
@@ -13,7 +13,7 @@ My laptop was $799 from Best Buy (this was four years ago, mind you) and it came
 Haven't had a single problem with it.
 It was a little awkward for the first semester, being the only one without a tablet, but after that nobody cared.
 
-The problem is that a few of my classes (maybe two or three) required handwritten assignments to be turned in online.
+The problem is a few of my classes (maybe two or three) required handwritten assignments to be turned in online.
 For these classes I did my assignments in pencil and scanned them using [Simple Scan][4] (takes only a few minutes).
 But the raw scans were ugly and unwieldy, often several megabytes in size.
 
@@ -50,12 +50,6 @@ convert $FILES -density 150 -page letter homework.pdf
 
 Note that it's loading up the GIMP (without the GUI) per scan.
 You could probably avoid this by putting all the `-b` options together, or figure out how to do it through the API.
-
-## Example
-
-TODO
-
-A few lines of code and some open-source software can save you $1200!
 
 [1]: http://vt.edu
 [2]: http://www.shopfujitsu.com/store/
