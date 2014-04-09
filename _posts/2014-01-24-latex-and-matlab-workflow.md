@@ -23,24 +23,24 @@ When writing a technical paper with lots of figures and equations, Word gets bog
 Editing more than ten pages or so of such content can be painfully slow.
 With LaTeX, you can (not that you would) have hundreds or even thousands of pages open in your editor, because *it's just text*.
 
-The usual argument against LaTeX asserts that it is difficult to install and use.
+The usual argument against LaTeX is that it is difficult to install and use.
 Perhaps this was true in the past, but these days all you have to do is grab the latest [TeX Live][3] distribution.
-There's a learning curve, to be sure, but have no fear: The [Wikibook][4] will hold your hand.
+There's a learning curve, to be sure, but have no fear--The [Wikibook][4] will hold your hand.
 
 <aside>
 <p>Recent versions of <a href="http://gnu.org/software/octave">Octave</a> support PGF/TikZ out of the box, using the <a href="https://www.gnu.org/software/octave/doc/interpreter/Graphics-Toolkits.html">gnuplot</a> toolkit.</p>
 </aside>
 
-[MATLAB][5] is a computing environment,  pervasive in engineering.
-Its simple language, libraries, documentation, and IDE are hard to beat.
-It has extensive plotting capabilities, but does not yet support exporting to [PGF/TikZ][7], the toolkit *du jour* for doing vector graphics in LaTeX.
-Luckily, there's an excellent library called [matlab2tikz][8] that does the job.
+[MATLAB][5] is a numerical computing environment, pervasive in engineering.
+Its simple language, comprehensive libraries, documentation, and IDE are hard to beat.
+It has extensive plotting capabilities, but does not yet support exporting to [PGF/TikZ][7], the preferred toolkit for creating vector graphics in LaTeX.
+Forunately, there's an excellent library called [matlab2tikz][8] (created by [Nico Schlömer][9]) that does the job.
 
 ## The workflow
 
 ### Structure
 
-Here's the typical structure of a project:
+Here's how I would typically structure a project:
 
 <pre><code>diary
 └── part_1
@@ -59,10 +59,12 @@ m
 │   ├── matlab2tikz.m
 │   └── updater.m
 └── parts
-    └── part_1.m
+    ├── part_1.m
+    └── ...
 tex
 ├── plots
-│   └── part_1_mag_db.tex
+│   ├── part_1_mag_db.tex
+│   └── ...
 └── project.tex
 </code></pre>
 
@@ -108,7 +110,7 @@ You could use <code>disp</code> or <code>x = x</code>, but these do not print st
 </p>
 </aside>
 
-The `thing` function prints out the contents of a variable, using [`strucdisp`][9] if it's a structure.
+The `thing` function just prints out the contents of a variable, using `strucdisp` ([link][10]) if it's a structure.
 
 {% highlight matlab %}
 function thing(name, thing)
@@ -131,7 +133,7 @@ Here's a laundry list of suggestions for writing MATLAB code.
 * **Don't use workspace (i.e. global) variables to pass along information.**
   Relying on global variables makes dependency tracking (what variables must I provide in order to use this script/function?) very difficult.
 * **Don't blindly `load` data.** The explicit form `load datafile x y z` is more readble, can catch errors, and doesn't risk polluting your scope.
-* **Try to section off I/O operations.** In general I/O (e.g. plotting) is costly, fragile, and often unneeded.
+* **Try to section off I/O operations.** Evil side effects, use only when needed.
 
 So what's a better way?
 Try the following:
@@ -181,7 +183,7 @@ I can run `part_1` *as a script* and have the variables dumped to the workspace 
 If I want to use the debugger, I can set a few breakpoints and run it *as a function* by hitting `F5`.
 Best of both worlds.
 
-On the third line I check whether `part_1` is the "main" thing being run, i.e. that it's not being called from another script or function, in which case I probably want to look at graphs and such.
+On the third line I check whether `part_1` is the main thing being run, i.e. that it's not being called from another script or function, in which case I probably want to look at graphs and such.
 
 ### Using LaTeX
 
@@ -306,7 +308,7 @@ save_tikz('Energy spectral density of $x(t)$');
 There are a few options for Emacs (with AUCtex).
 If you don't care about the external stuff, and just want to use `lualatex`, add `(setq TeX-engine 'lualatex)` to your your `init.el`.
 I also like to use `latexmk` (otherwise you have to `C-c C-c` multiple times), but it's not supported out of the box yet.
-Have a look [here][10] or [here][11] on how to set it up yourself.
+Have a look [here][11] or [here][12] on how to set it up yourself.
 
 #### Vim
 
@@ -318,8 +320,9 @@ au FileType * setlocal mp=latexmk\ -pdf\ -e\ '$pdflatex=\"lualatex\ -file-line-e
 
 ## Closing thoughts
 
-I think that about covers everything.
-I'm really happy with this workflow, and I'm certain that it improved the quality of my work as well as productivity.
+I'm certain that this workflow helped me produce better results more efficiently.
+Why don't you give it a try?
+Hopefully these notes provide a good starting point.
 
 [0]: http://wikipedia.org/wiki/LaTeX
 [1]: http://nitens.org/taraborelli/latex
@@ -329,6 +332,8 @@ I'm really happy with this workflow, and I'm certain that it improved the qualit
 [5]: http://mathworks.com
 [7]: http://wikipedia.org/wiki/PGF/TikZ
 [8]: https://github.com/nschloe/matlab2tikz
-[9]: http://www.mathworks.com/matlabcentral/fileexchange/13500-structure-outline/content/strucdisp.m
-[10]: http://tex.stackexchange.com/questions/124793/emacs-and-latexmk-setup-for-shell-escape
-[11]: https://github.com/tom-tan/auctex-latexmk
+[9]: http://nschloe.blogspot.com/#!
+[10]: http://www.mathworks.com/matlabcentral/fileexchange/13500-structure-outline/content/strucdisp.m
+[11]: http://tex.stackexchange.com/questions/124793/emacs-and-latexmk-setup-for-shell-escape
+[12]: https://github.com/tom-tan/auctex-latexmk
+
