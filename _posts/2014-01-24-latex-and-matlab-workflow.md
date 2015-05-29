@@ -1,31 +1,36 @@
 ---
 title: LaTeX and MATLAB workflow
 layout: post
+modified_date: 26 May 2015
 tags: [school, tex]
 ---
 
 I used MATLAB and LaTeX extensively last semester.
-Each project (like, eight or nine, plus other assignments) was a chance to revise my workflow.
+Each project (eight or nine, plus other assignments) was a chance to revise my workflow.
 By the end of the semester I had come up with a simple, efficient workflow that produced high-quality results.
+
+Here's an [example](/assets/latex-matlab-example.pdf) document and [source code](/assets/latex-matlab-example.zip).
+
+1. TOC
+{:toc}
 
 ## Preface
 
-[LaTeX][0] is a document preparation system. 
-It isn't used much outside of academia, which is a shame because it really is superior to the likes of Word in a number of ways:
+[LaTeX][0] is a document preparation system.
+It's not used much outside of academia, which is a shame because there are a lot of great things about it:
 
-* It's free (both *gratis* and *libre*), cross platform
-* Much [better][1] [typesetting][2]
+* It's free (gratis and libre) and cross platform
+* Really [nice][1] [typesetting][2]
 * Separation of content and presentation
 * Source files are text
 * Lots of powerful libraries
 
-When writing a technical paper with lots of figures and equations, Word gets bogged down really quickly.
-Editing more than ten pages or so of such content can be painfully slow.
-With LaTeX, you can (not that you would) have hundreds or even thousands of pages open in your editor, because *it's just text*.
+Programs like Word struggle with technical papers that have lots of figures and equations.
+Editing just a dozen or so pages of such content can be painfully slow.
+This isn't a problem at all with LaTeX since it's just plaintext.
 
 The usual argument against LaTeX is that it is difficult to install and use.
-Perhaps this was true in the past, but these days all you have to do is grab the latest [TeX Live][3] distribution.
-There's a learning curve, to be sure, but have no fear--The [Wikibook][4] will hold your hand.
+Perhaps this was true in the past, but today all you have to do is grab the latest [TeX Live][3] distribution and consult the [Wikibook][4].
 
 <aside>
 <p>Recent versions of <a href="http://gnu.org/software/octave">Octave</a> support PGF/TikZ out of the box, using the <a href="https://www.gnu.org/software/octave/doc/interpreter/Graphics-Toolkits.html">gnuplot</a> toolkit.</p>
@@ -33,8 +38,8 @@ There's a learning curve, to be sure, but have no fear--The [Wikibook][4] will h
 
 [MATLAB][5] is a numerical computing environment, pervasive in engineering.
 Its simple language, comprehensive libraries, documentation, and IDE are hard to beat.
-It has extensive plotting capabilities, but does not yet support exporting to [PGF/TikZ][7], the preferred toolkit for creating vector graphics in LaTeX.
-Forunately, there's an excellent library called [matlab2tikz][8] (created by [Nico Schlömer][9]) that does the job.
+It has extensive plotting capabilities, but does not currently support exporting to [PGF/TikZ][7].
+Forunately, there's an excellent library called [matlab2tikz][8] that does the job.
 
 ## The workflow
 
@@ -72,7 +77,7 @@ The `m/` directory (and its subdirectories) are added to MATLAB's path.
 
 ### Helpers
 
-The `save_tikz` function is a simple wrapper around `matlab2tikz` that writes to `tex/plots/`, disables auto-updates, and has some other options depending on the project:
+My `save_tikz` function is just a wrapper around `matlab2tikz` that writes to `tex/plots/`, disables auto-updates, and has some other options depending on the project:
 
 {% highlight matlab %}
 function save_tikz(filename, markersize)
@@ -110,7 +115,7 @@ You could use <code>disp</code> or <code>x = x</code>, but these do not print st
 </p>
 </aside>
 
-The `thing` function just prints out the contents of a variable, using `strucdisp` ([link][10]) if it's a structure.
+The `thing` function just prints out the contents of a variable, using [`strucdisp`][9] if it's a structure.
 
 {% highlight matlab %}
 function thing(name, thing)
@@ -128,12 +133,12 @@ The `resample_for_tikz` function is explained a little bit later.
 
 Here's a laundry list of suggestions for writing MATLAB code.
 
-* **Don't do all your work in a single script.** And try to write functions instead of scripts.
-* **Keep scripts/functions small.** Say, less than 200 lines. Long scripts and functions are hard to debug and work on.
-* **Don't use workspace (i.e. global) variables to pass along information.**
-  Relying on global variables makes dependency tracking (what variables must I provide in order to use this script/function?) very difficult.
+* **Don't do all your work in a single script.** And try to write functions.
+* **Keep scripts/functions small.** Say, less than 200 lines.
+* **Don't use workspace variables to pass along information.**
+  Relying on global variables makes dependency tracking (what variables must I provide in order to use this?) very difficult.
 * **Don't blindly `load` data.** The explicit form `load datafile x y z` is more readble, can catch errors, and doesn't risk polluting your scope.
-* **Try to section off I/O operations.** Evil side effects, use only when needed.
+* **Try to section off I/O.** Stuff like plotting, writing data files, etc. are really time-consuming.
 
 So what's a better way?
 Try the following:
@@ -175,23 +180,19 @@ if enable_plots;
 end
 {% endhighlight %}
 
-On the first line the outputs explicitly specified.
+On the first line the outputs are explicitly specified.
 You could also specify inputs (and provide defaults the usual way, by checking `nargin`).
 
 On the second line I set a code fold using `%%`.
-I can run `part_1` *as a script* and have the variables dumped to the workspace using `C-Enter` (making sure to run `clear all` afterwards).
-If I want to use the debugger, I can set a few breakpoints and run it *as a function* by hitting `F5`.
-Best of both worlds.
+I can run `part_1` as a script and have the variables dumped to the workspace using `C-Enter` (just remember to `clear all` when you're done).
+If I want to use the debugger, I can set a few breakpoints and run it as a function by hitting `F5`.
+You get the best of both worlds.
 
 On the third line I check whether `part_1` is the main thing being run, i.e. that it's not being called from another script or function, in which case I probably want to look at graphs and such.
 
 ### Using LaTeX
 
-Here's the basic preamble for working with PGF/TikZ.
-
-<aside>
-<p>Don't worry about the <code>pgfplotsset</code> syntax. I don't understand it, either.</p>
-</aside>
+Here's a basic preamble for working with PGF/TikZ.
 
 {% highlight tex %}
 \usepackage{graphicx}
@@ -216,7 +217,7 @@ Here's the basic preamble for working with PGF/TikZ.
 \newlength\figwidth
 {% endhighlight %}
 
-And to include a plot:
+To include a plot:
 
 {% highlight tex %}
 \begin{figure}[!ht]
@@ -229,18 +230,15 @@ And to include a plot:
 \end{figure}
 {% endhighlight %}
 
-The relatively new `external` library renders plots to separate numbered PDF files, e.g. `project_figure-0.pdf`.
+The `external` library renders plots to separate numbered PDF files, e.g. `project_figure-0.pdf`.
 Plots are re-rendered when their source file is modified.
-There are a few annoying details you should be aware of:
+Just note that you have to configure your editor to use `-shell-escape` (see below).
 
-* When you remove or reorder plots, the numbering gets messed up and you'll have to delete all the previous renderings.
-* You have to configure your editor to use `-shell-escape` (see below)
-
-I'm using `lualatex`, which is included with TeX Live.
-The original `pdflatex` runs out of memory (uses a fixed amount, difficult to configure) easily when rendering TikZ plots.
+I use `lualatex`, which is included with TeX Live.
+The default `pdflatex` runs out of memory quickly when rendering TikZ (uses a fixed amount that is hard to configure).
 I haven't run into any compatability issues yet.
 
-As a rule of thumb, you should try to limit your generated TikZ plots to less than 250kb, to keep render time short.
+As a rule of thumb, you should try to limit your generated TikZ plots to less than 250 KiB, to keep render time short.
 This can be a problem for plots with lots of data, and where uniform decimation doesn't preserve the original shape.
 You may have to get creative.
 
@@ -292,7 +290,7 @@ nfft = 2^nextpow2(n);
 fmax = n*fs;
 f = linspace(-fmax/2, fmax/2, nfft);
 esd = fftshift(fft(x, nfft));
-ix = resample_for_tikz(x, 2e3);
+ix = resample_for_tikz(esd, 2e3);
 
 figure;
 plot(f(ix)/1e3, db(esd(ix)));
@@ -306,9 +304,9 @@ save_tikz('Energy spectral density of $x(t)$');
 #### Emacs
 
 There are a few options for Emacs (with AUCtex).
-If you don't care about the external stuff, and just want to use `lualatex`, add `(setq TeX-engine 'lualatex)` to your your `init.el`.
-I also like to use `latexmk` (otherwise you have to `C-c C-c` multiple times), but it's not supported out of the box yet.
-Have a look [here][11] or [here][12] on how to set it up yourself.
+If you don't care about the external stuff and just want to use `lualatex`, add `(setq TeX-engine 'lualatex)` to your your `init.el`.
+I like to use `latexmk` to about having to `C-c C-c` multiple times, but it's not supported out of the box.
+Have a look [here][10] or [here][11] on how to set it up yourself.
 
 #### Vim
 
@@ -320,9 +318,7 @@ au FileType * setlocal mp=latexmk\ -pdf\ -e\ '$pdflatex=\"lualatex\ -file-line-e
 
 ## Closing thoughts
 
-I'm certain that this workflow helped me produce better results more efficiently.
-Why don't you give it a try?
-Hopefully these notes provide a good starting point.
+Hopefully this article gives you some idea of how MATLAB and LaTeX can work together.
 
 [0]: http://wikipedia.org/wiki/LaTeX
 [1]: http://nitens.org/taraborelli/latex
@@ -331,9 +327,8 @@ Hopefully these notes provide a good starting point.
 [4]: http://wikibooks.org/wiki/LaTeX
 [5]: http://mathworks.com
 [7]: http://wikipedia.org/wiki/PGF/TikZ
-[8]: https://github.com/nschloe/matlab2tikz
-[9]: http://nschloe.blogspot.com/#!
-[10]: http://www.mathworks.com/matlabcentral/fileexchange/13500-structure-outline/content/strucdisp.m
-[11]: http://tex.stackexchange.com/questions/124793/emacs-and-latexmk-setup-for-shell-escape
-[12]: https://github.com/tom-tan/auctex-latexmk
+[8]: https://github.com/matlab2tikz/matlab2tikz
+[9]: http://www.mathworks.com/matlabcentral/fileexchange/13500-structure-outline/content/strucdisp.m
+[10]: http://tex.stackexchange.com/questions/124793/emacs-and-latexmk-setup-for-shell-escape
+[11]: https://github.com/tom-tan/auctex-latexmk
 

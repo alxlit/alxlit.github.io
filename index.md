@@ -1,12 +1,12 @@
 ---
 title: alxlit
-nav_title: Home
+nav_title: Blog
 layout: default
 ---
 
-# Home
+# Blog
 
-<ul>
+<ul class="posts">
   {% for post in site.posts %}
     <li>
       <aside><p>{{ post.date | date_to_string }}</p></aside>

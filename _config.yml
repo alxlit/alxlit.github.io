@@ -1,3 +1,3 @@
 encoding: utf-8
-pygments: true
+highlighter: pygments
 timezone: America/New_York
