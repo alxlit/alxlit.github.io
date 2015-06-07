@@ -109,12 +109,6 @@ function diary_off()
 diary off;
 {% endhighlight %}
 
-<aside>
-<p>
-You could use <code>disp</code> or <code>x = x</code>, but these do not print structure contents.
-</p>
-</aside>
-
 The `thing` function just prints out the contents of a variable, using [`strucdisp`][9] if it's a structure.
 
 {% highlight matlab %}

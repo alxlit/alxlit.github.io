@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>{{ page.title }}</title>
-  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto|Inconsolata" />
   <link rel="stylesheet" type="text/css" href="/assets/css/default.css" />
   <link rel="stylesheet" type="text/css" href="/assets/css/bw.css" />
 </head>
@@ -11,16 +11,17 @@
   <div id="page">
     <div id="logo"><h1><a href="/">alxlit</a></h1></div>
     <div id="nav">
-      <ul>
 	{% assign sorted_pages = site.pages | sort:"name" %}
 	{% for p in sorted_pages %}
 	  {% if p.title != null %}
-  	  <li class="{% if p.url == page.url or (p.url == '/index.html' and page.path contains '_posts') %}active{% endif %}">
-	    <a href="{{ p.url }}">{% if p.nav_title %}{{ p.nav_title }}{% else %}{{ p.title }}{% endif %}</a>
-	  </li>
+  	  <a class="{% if p.url == page.url or (p.url == '/index.html' and page.path contains '_posts') %}active{% endif %}" href="{{ p.url }}">
+	    {% if p.nav_title %}{{ p.nav_title }}{% else %}{{ p.title }}{% endif %}
+	  </a>
+	  {% if forloop.last != true %}
+	  <span>&middot;</span>
+	  {% endif %}
 	  {% endif %}
 	{% endfor %}
-      </ul>
     </div>
     <div id="content">
       <div>{{ content }}</div>

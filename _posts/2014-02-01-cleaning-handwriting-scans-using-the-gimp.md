@@ -4,19 +4,16 @@ layout: post
 modified_date: 26 May 2015
 ---
 
-TODO insert example.
-
 ## Motivation
 
-[Virginia Tech][1] used to require its engineering students to purchase a hybrid laptop.
-The idea, I suppose, was to save trees, enable note taking directly on lecture slides, interactive classrooms, etc.
-But they really expensive and the loaded with buggy software, and I wasn't into it.
+[Virginia Tech][1] used to require its engineering students to purchase a tablet / hybrid laptop.
+The idea was to enable note taking directly on lecture slides, interactive classrooms, etc.
+But they really expensive and loaded with buggy software, and I wasn't into it.
 
-The cheaper, better option was to buy a mid-range laptop, a printer/scanner combo, a stack of 50&cent; one-subject notebooks, and a good pen.
+The cheaper option was to buy a mid-range laptop, a printer / scanner combo, a stack of 50&cent; single-subject notebooks, and a good pen.
 My laptop came with an HP Photosmart that plays well with CUPS. 
-It was a little awkward for the first semester (being the only one without a tablet) but after that nobody cared.
 
-The problem was that a few of my classes (maybe two or three) required handwritten assignments to be turned in online.
+The problem was that a few of my classes required handwritten assignments to be turned in online.
 For these classes I did my assignments in pencil and scanned them using [Simple Scan][4].
 But the raw scans were ugly and unwieldy, often several megabytes in size.
 
@@ -53,7 +50,7 @@ convert $FILES -density 150 -page letter homework.pdf
 {% endhighlight %}
 
 Note that it's loading up the GIMP (headless) per scan.
-You could probably avoid this by putting all the `-b` options together, or figure out how to do it purely through the API.
+This could probably be avoided by putting all the `-b` options together, or doing it purely through the API.
 
 [1]: http://vt.edu
 [4]: https://launchpad.net/simple-scan
