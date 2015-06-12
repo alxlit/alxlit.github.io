@@ -65,12 +65,10 @@ ol > li > ol > li > ol { list-style-type: lower-roman;
 
 #nav span { color: #777; }
 
-#content {}
-
 #content { margin: 0;
            width: 100%; }
 
-#content > div { padding: 0; }
+#content > div { padding: 0 1em; }
 
 #content aside { font-style: italic;
                  margin-left: -10em;
