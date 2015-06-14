@@ -5,7 +5,7 @@ layout: default
 
 # Projects
 
-Here's how I would sort my projects on GitHub, [if they would let me](https://github.com/isaacs/github/issues/166).
+Here's how I would sort my projects on GitHub, [if I could](https://github.com/isaacs/github/issues/166).
 
 #### Active
 
