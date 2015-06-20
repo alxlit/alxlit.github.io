@@ -5,25 +5,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.title }}</title>
-  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400|Source+Serif+Pro|Source+Code+Pro:400" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?=Inconsolata" />
   <link rel="stylesheet" type="text/css" href="/assets/css/default.css" />
   <link rel="stylesheet" type="text/css" href="/assets/css/bw.css" />
 </head>
 <body>
   <div id="page">
-    <div id="logo"><h1><a href="/">alxlit</a></h1></div>
     <div id="nav">
-	{% assign sorted_pages = site.pages | sort:"name" %}
-	{% for p in sorted_pages %}
-	  {% if p.title != null %}
-  	  <a class="{% if p.url == page.url or (p.url == '/index.html' and page.path contains '_posts') %}active{% endif %}" href="{{ p.url }}">
+      {% assign sorted_pages = site.pages | sort:"name" %}
+      {% for p in sorted_pages %}
+        {% if p.title != null %}
+          <a class="{% if p.url == page.url or (p.url == '/index.html' and page.path contains '_posts') %}active{% endif %}" href="{{ p.url }}">
 	    {% if p.nav_title %}{{ p.nav_title }}{% else %}{{ p.title }}{% endif %}
 	  </a>
 	  {% if forloop.last != true %}
-	  <span>&middot;</span>
+	    <span>&middot;</span>
 	  {% endif %}
-	  {% endif %}
-	{% endfor %}
+        {% endif %}
+      {% endfor %}
     </div>
     <div id="content">
       <div>{{ content }}</div>
